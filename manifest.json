@@ -1,0 +1,150 @@
+{
+  "name": "cortex-plugin-rag-pipeline",
+  "version": "1.0.0",
+  "description": "Pluggable RAG: ingest PDFs/websites/codebases into vector store, query with hybrid search",
+  "kind": "esm",
+  "entryPoint": "mod.ts",
+  "runtime": "deno",
+  "author": "CortexPrism",
+  "license": "MIT",
+  "repository": "https://github.com/CortexPrism/cortex-plugin-rag-pipeline",
+  "homepage": "",
+  "capabilities": [
+    "tools",
+    "network:fetch",
+    "fs:read"
+  ],
+  "tools": [
+    {
+      "name": "rag_ingest",
+      "description": "Ingest content into the RAG pipeline",
+      "params": [
+        {
+          "name": "source",
+          "type": "string",
+          "description": "URL, file path, or raw text to ingest",
+          "required": true
+        },
+        {
+          "name": "source_type",
+          "type": "string",
+          "description": "Type of source",
+          "required": true,
+          "options": ["url", "file", "text"]
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Label for this document",
+          "required": false
+        },
+        {
+          "name": "chunk_size",
+          "type": "number",
+          "description": "Chunk size for splitting",
+          "required": false,
+          "defaultValue": 1000
+        },
+        {
+          "name": "chunk_overlap",
+          "type": "number",
+          "description": "Overlap between chunks",
+          "required": false,
+          "defaultValue": 200
+        }
+      ]
+    },
+    {
+      "name": "rag_query",
+      "description": "Query the ingested knowledge",
+      "params": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Search query",
+          "required": true
+        },
+        {
+          "name": "max_results",
+          "type": "number",
+          "description": "Maximum number of results",
+          "required": false,
+          "defaultValue": 5
+        },
+        {
+          "name": "search_type",
+          "type": "string",
+          "description": "Type of search to perform",
+          "required": false,
+          "defaultValue": "hybrid",
+          "options": ["hybrid", "vector", "keyword"]
+        },
+        {
+          "name": "filter_source",
+          "type": "string",
+          "description": "Filter results by source ID",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "rag_list_sources",
+      "description": "List all ingested sources",
+      "params": []
+    },
+    {
+      "name": "rag_remove_source",
+      "description": "Remove an ingested source",
+      "params": [
+        {
+          "name": "source_id",
+          "type": "string",
+          "description": "ID of the source to remove",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "rag_stats",
+      "description": "Get RAG pipeline statistics",
+      "params": []
+    }
+  ],
+  "ui": {
+    "section": "Vector Store",
+    "fields": [
+      {
+        "key": "vectorStore",
+        "label": "Vector Store",
+        "type": "select",
+        "description": "Vector store backend",
+        "defaultValue": "memory",
+        "options": [
+          { "label": "In-Memory", "value": "memory" },
+          { "label": "Qdrant", "value": "qdrant" },
+          { "label": "Pinecone", "value": "pinecone" }
+        ]
+      },
+      {
+        "key": "qdrantUrl",
+        "label": "Qdrant URL",
+        "type": "text",
+        "description": "URL for Qdrant vector store"
+      },
+      {
+        "key": "pineconeApiKey",
+        "label": "Pinecone API Key",
+        "type": "secret",
+        "description": "API key for Pinecone vector store"
+      }
+    ]
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "cortex": ">=1.0.0"
+  },
+  "aiDisclosure": {
+    "tools": ["Claude Code (Anthropic)"],
+    "humanReview": true
+  }
+}
