@@ -17,6 +17,7 @@ cortex plugin install ./manifest.json
 Ingest content into the RAG pipeline.
 
 **Parameters:**
+
 - `source` (string, required) — URL, file path, or raw text
 - `source_type` (string, required) — url, file, text
 - `name` (string, optional) — Label for this document
@@ -28,6 +29,7 @@ Ingest content into the RAG pipeline.
 Query the ingested knowledge.
 
 **Parameters:**
+
 - `query` (string, required) — Search query
 - `max_results` (number, optional, default 5) — Maximum results
 - `search_type` (string, optional, default "hybrid") — hybrid, vector, keyword
@@ -42,6 +44,7 @@ List all ingested sources.
 Remove an ingested source.
 
 **Parameters:**
+
 - `source_id` (string, required) — Source ID to remove
 
 ### rag_stats

@@ -1,6 +1,6 @@
 {
   "name": "cortex-plugin-rag-pipeline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pluggable RAG: ingest PDFs/websites/codebases into vector store, query with hybrid search",
   "kind": "esm",
   "entryPoint": "mod.ts",

@@ -1,4 +1,4 @@
-import type { Tool, ToolContext, PluginContext, ToolCallResult } from 'cortex/plugins';
+import type { PluginContext, Tool, ToolCallResult, ToolContext } from './types.ts';
 
 let pluginConfig: Record<string, unknown> = {};
 
@@ -16,11 +16,31 @@ const ragIngestTool: Tool = {
     name: 'rag_ingest',
     description: 'Ingest content into the RAG pipeline',
     params: [
-      { name: 'source', type: 'string', description: 'URL, file path, or raw text to ingest', required: true },
-      { name: 'source_type', type: 'string', description: 'Type of source (url, file, text)', required: true },
+      {
+        name: 'source',
+        type: 'string',
+        description: 'URL, file path, or raw text to ingest',
+        required: true,
+      },
+      {
+        name: 'source_type',
+        type: 'string',
+        description: 'Type of source (url, file, text)',
+        required: true,
+      },
       { name: 'name', type: 'string', description: 'Label for this document', required: false },
-      { name: 'chunk_size', type: 'number', description: 'Chunk size for splitting', required: false },
-      { name: 'chunk_overlap', type: 'number', description: 'Overlap between chunks', required: false },
+      {
+        name: 'chunk_size',
+        type: 'number',
+        description: 'Chunk size for splitting',
+        required: false,
+      },
+      {
+        name: 'chunk_overlap',
+        type: 'number',
+        description: 'Overlap between chunks',
+        required: false,
+      },
     ],
     capabilities: ['network:fetch', 'fs:read'],
   },
@@ -83,9 +103,24 @@ const ragQueryTool: Tool = {
     description: 'Query the ingested knowledge',
     params: [
       { name: 'query', type: 'string', description: 'Search query', required: true },
-      { name: 'max_results', type: 'number', description: 'Maximum number of results', required: false },
-      { name: 'search_type', type: 'string', description: 'Type of search (hybrid, vector, keyword)', required: false },
-      { name: 'filter_source', type: 'string', description: 'Filter results by source ID', required: false },
+      {
+        name: 'max_results',
+        type: 'number',
+        description: 'Maximum number of results',
+        required: false,
+      },
+      {
+        name: 'search_type',
+        type: 'string',
+        description: 'Type of search (hybrid, vector, keyword)',
+        required: false,
+      },
+      {
+        name: 'filter_source',
+        type: 'string',
+        description: 'Filter results by source ID',
+        required: false,
+      },
     ],
     capabilities: [],
   },
@@ -110,7 +145,9 @@ const ragQueryTool: Tool = {
           toolName: 'rag_query',
           success: false,
           output: '',
-          error: `Invalid search_type: ${searchType}. Must be one of: ${validSearchTypes.join(', ')}`,
+          error: `Invalid search_type: ${searchType}. Must be one of: ${
+            validSearchTypes.join(', ')
+          }`,
           durationMs: Date.now() - start,
         };
       }
@@ -174,7 +211,12 @@ const ragRemoveSourceTool: Tool = {
     name: 'rag_remove_source',
     description: 'Remove an ingested source',
     params: [
-      { name: 'source_id', type: 'string', description: 'ID of the source to remove', required: true },
+      {
+        name: 'source_id',
+        type: 'string',
+        description: 'ID of the source to remove',
+        required: true,
+      },
     ],
     capabilities: [],
   },
