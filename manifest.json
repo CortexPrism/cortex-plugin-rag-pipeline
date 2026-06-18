@@ -1,6 +1,6 @@
 {
   "name": "cortex-plugin-rag-pipeline",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Pluggable RAG: ingest PDFs/websites/codebases into vector store, query with hybrid search",
   "kind": "esm",
   "entryPoint": "mod.ts",
@@ -8,7 +8,7 @@
   "author": "CortexPrism",
   "license": "MIT",
   "repository": "https://github.com/CortexPrism/cortex-plugin-rag-pipeline",
-  "homepage": "",
+  "homepage": "https://github.com/CortexPrism/cortex-plugin-rag-pipeline",
   "capabilities": [
     "tools",
     "network:fetch",
@@ -30,7 +30,11 @@
           "type": "string",
           "description": "Type of source",
           "required": true,
-          "options": ["url", "file", "text"]
+          "enum": [
+            "url",
+            "file",
+            "text"
+          ]
         },
         {
           "name": "name",
@@ -43,14 +47,14 @@
           "type": "number",
           "description": "Chunk size for splitting",
           "required": false,
-          "defaultValue": 1000
+          "default": 1000
         },
         {
           "name": "chunk_overlap",
           "type": "number",
           "description": "Overlap between chunks",
           "required": false,
-          "defaultValue": 200
+          "default": 200
         }
       ]
     },
@@ -69,15 +73,19 @@
           "type": "number",
           "description": "Maximum number of results",
           "required": false,
-          "defaultValue": 5
+          "default": 5
         },
         {
           "name": "search_type",
           "type": "string",
           "description": "Type of search to perform",
           "required": false,
-          "defaultValue": "hybrid",
-          "options": ["hybrid", "vector", "keyword"]
+          "default": "hybrid",
+          "enum": [
+            "hybrid",
+            "vector",
+            "keyword"
+          ]
         },
         {
           "name": "filter_source",
@@ -111,31 +119,44 @@
     }
   ],
   "ui": {
-    "section": "Vector Store",
-    "fields": [
+    "settings": [
       {
-        "key": "vectorStore",
-        "label": "Vector Store",
-        "type": "select",
-        "description": "Vector store backend",
-        "defaultValue": "memory",
-        "options": [
-          { "label": "In-Memory", "value": "memory" },
-          { "label": "Qdrant", "value": "qdrant" },
-          { "label": "Pinecone", "value": "pinecone" }
+        "section": "Vector Store",
+        "fields": [
+          {
+            "key": "vectorStore",
+            "label": "Vector Store",
+            "type": "select",
+            "description": "Vector store backend",
+            "default": "memory",
+            "enum": [
+              {
+                "label": "In-Memory",
+                "value": "memory"
+              },
+              {
+                "label": "Qdrant",
+                "value": "qdrant"
+              },
+              {
+                "label": "Pinecone",
+                "value": "pinecone"
+              }
+            ]
+          },
+          {
+            "key": "qdrantUrl",
+            "label": "Qdrant URL",
+            "type": "text",
+            "description": "URL for Qdrant vector store"
+          },
+          {
+            "key": "pineconeApiKey",
+            "label": "Pinecone API Key",
+            "type": "secret",
+            "description": "API key for Pinecone vector store"
+          }
         ]
-      },
-      {
-        "key": "qdrantUrl",
-        "label": "Qdrant URL",
-        "type": "text",
-        "description": "URL for Qdrant vector store"
-      },
-      {
-        "key": "pineconeApiKey",
-        "label": "Pinecone API Key",
-        "type": "secret",
-        "description": "API key for Pinecone vector store"
       }
     ]
   },
@@ -144,7 +165,9 @@
     "cortex": ">=1.0.0"
   },
   "aiDisclosure": {
-    "tools": ["Claude Code (Anthropic)"],
+    "tools": [
+      "Claude Code (Anthropic)"
+    ],
     "humanReview": true
   }
 }
