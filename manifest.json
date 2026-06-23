@@ -1,6 +1,6 @@
 {
   "name": "cortex-plugin-rag-pipeline",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Pluggable RAG: ingest PDFs/websites/codebases into vector store, query with hybrid search",
   "kind": "esm",
   "entryPoint": "mod.ts",
@@ -47,14 +47,14 @@
           "type": "number",
           "description": "Chunk size for splitting",
           "required": false,
-          "default": 1000
+          "defaultValue": 1000
         },
         {
           "name": "chunk_overlap",
           "type": "number",
           "description": "Overlap between chunks",
           "required": false,
-          "default": 200
+          "defaultValue": 200
         }
       ]
     },
@@ -73,14 +73,14 @@
           "type": "number",
           "description": "Maximum number of results",
           "required": false,
-          "default": 5
+          "defaultValue": 5
         },
         {
           "name": "search_type",
           "type": "string",
           "description": "Type of search to perform",
           "required": false,
-          "default": "hybrid",
+          "defaultValue": "hybrid",
           "enum": [
             "hybrid",
             "vector",
@@ -128,8 +128,8 @@
             "label": "Vector Store",
             "type": "select",
             "description": "Vector store backend",
-            "default": "memory",
-            "enum": [
+            "defaultValue": "memory",
+            "options": [
               {
                 "label": "In-Memory",
                 "value": "memory"
@@ -162,7 +162,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "cortex": ">=1.0.0"
+    "cortex": ">=0.51.0"
   },
   "aiDisclosure": {
     "tools": [

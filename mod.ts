@@ -1,5 +1,5 @@
 // deno-lint-ignore-file
-import type { PluginContext, Tool, ToolCallResult, ToolContext } from './types.ts';
+import type { PluginContext, Tool, ToolCallResult } from 'cortex/plugins';
 
 let pluginConfig: Record<string, unknown> = {};
 
@@ -45,7 +45,7 @@ const ragIngestTool: Tool = {
     ],
     capabilities: ['network:fetch', 'fs:read'],
   },
-  execute: async (args: Record<string, unknown>, _ctx: ToolContext): Promise<ToolCallResult> => {
+  execute: async (args: Record<string, unknown>, _ctx: PluginContext): Promise<ToolCallResult> => {
     const start = Date.now();
     try {
       const source = args.source;
@@ -125,7 +125,7 @@ const ragQueryTool: Tool = {
     ],
     capabilities: [],
   },
-  execute: async (args: Record<string, unknown>, _ctx: ToolContext): Promise<ToolCallResult> => {
+  execute: async (args: Record<string, unknown>, _ctx: PluginContext): Promise<ToolCallResult> => {
     const start = Date.now();
     try {
       const query = args.query;
@@ -185,7 +185,7 @@ const ragListSourcesTool: Tool = {
     params: [],
     capabilities: [],
   },
-  execute: async (_args: Record<string, unknown>, _ctx: ToolContext): Promise<ToolCallResult> => {
+  execute: async (_args: Record<string, unknown>, _ctx: PluginContext): Promise<ToolCallResult> => {
     const start = Date.now();
     try {
       const result = { sources: [] };
@@ -221,7 +221,7 @@ const ragRemoveSourceTool: Tool = {
     ],
     capabilities: [],
   },
-  execute: async (args: Record<string, unknown>, _ctx: ToolContext): Promise<ToolCallResult> => {
+  execute: async (args: Record<string, unknown>, _ctx: PluginContext): Promise<ToolCallResult> => {
     const start = Date.now();
     try {
       const sourceId = args.source_id;
@@ -260,7 +260,7 @@ const ragStatsTool: Tool = {
     params: [],
     capabilities: [],
   },
-  execute: async (_args: Record<string, unknown>, _ctx: ToolContext): Promise<ToolCallResult> => {
+  execute: async (_args: Record<string, unknown>, _ctx: PluginContext): Promise<ToolCallResult> => {
     const start = Date.now();
     try {
       const result = { total_sources: 0, total_chunks: 0, total_tokens: 0 };
